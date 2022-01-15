@@ -71,30 +71,30 @@ const Artworks = (props) => {
           normalizedPosition = interactionBox.normalizePoint(tipPosition);
         }
 
-        const artworksPreviousFrame = artworksController.frame(10);
+        const artworksPreviousFrame = artworksController.frame(1);
         const artworksMovement = artworksHand.translation(
           artworksPreviousFrame
         );
 
         if (
-          artworksMovement[0] < 0 &&
-          normalizedPosition[0] > -0.5 &&
-          normalizedPosition[0] < 0.5 &&
-          tipPosition[2] > -75 &&
-          tipPosition[2] < 120
+          artworksMovement[0] < 0
+          // normalizedPosition[0] > -0.5 &&
+          // normalizedPosition[0] < 0.5 &&
+          // tipPosition[2] > -75 &&
+          // tipPosition[2] < 120
         ) {
-          // console.log("normalized", normalizedPosition[0]); // LeftRight
+          console.log("normalized rtl", normalizedPosition[0]); // LeftRight
           // console.log("tipPosition", tipPosition[2]); // UpDown
           sliderArtworks.current.slickNext();
         }
         if (
-          artworksMovement[0] > 0 &&
-          normalizedPosition[0] > -0.5 &&
-          normalizedPosition[0] < 0.5 &&
-          tipPosition[2] > -75 &&
-          tipPosition[2] < 120
+          artworksMovement[0] > 0 
+          // normalizedPosition[0] > -0.5 &&
+          // normalizedPosition[0] < 0.5 &&
+          // tipPosition[2] > -75 &&
+          // tipPosition[2] < 120
         ) {
-          // console.log("normalized", normalizedPosition[0]);
+          console.log("normalized ltr", normalizedPosition[0]);
           // console.log("tipPosition", tipPosition[2]);
           sliderArtworks.current.slickPrev();
         }

@@ -21,8 +21,8 @@ body #root {
   z-index: 2;
 
   @include bp(v4k) {
-    display: none;
-    height: 100px;
+    // display: none;
+    height: 120px;
   }
 
   &__left {
@@ -46,8 +46,8 @@ body #root {
     }
 
     @include bp(v4k) {
-      height: 50px;
-      margin-left: 50px;
+      height: 85px;
+      margin-left: 30px;
     }
   }
 
@@ -74,8 +74,9 @@ body #root {
       }
 
       @include bp(v4k) {
-        margin-left: 20px;
-        font-size: 2.6rem;
+        margin-left: 30px;
+        font-size: 3.6rem;
+        font-weight: 500;
         line-height: 1;
       }
     }
@@ -101,7 +102,10 @@ body #root {
     z-index: 3;
 
     @include bp(v4k) {
-      margin-left: 20px;
+      // margin-left: 20px;
+      top: 120px;
+      left: -300px;
+      width: 300px;
       font-size: 2rem;
       line-height: 1.1;
     }
@@ -120,12 +124,20 @@ body #root {
         padding-bottom: 0;
         border: 0;
       }
+
+      @include bp(v4k) {
+        padding: 15px 2px;
+      }
     }
   }
 
   .toggle-links {
     left: -220px;
     transition: left 400ms;
+
+    @include bp(v4k) {
+      left: -300px;
+    }
 
     &-enter {
       left: 0;
@@ -140,11 +152,19 @@ body #root {
     &-exit {
       left: -220px;
       transition: left 400ms;
+
+      @include bp(v4k) {
+        left: -300px;
+      }
     }
 
     &-exit-done {
       left: -220px;
       transition: left 400ms;
+
+      @include bp(v4k) {
+        left: -300px;
+      }
     }
   }
 }

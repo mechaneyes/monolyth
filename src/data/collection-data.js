@@ -310,6 +310,10 @@ const hypnos = [
   {
     id: "a3",
     class: "yoal-green",
+    img: "yoal-0.1.0.jpg",
+    img576: "yoal-0.1.0-576px.jpg",
+    img992: "yoal-0.1.0-992px.jpg",
+    img2160: "yoal-0.1.0-2160px.jpg",
     flag: "endlessnight2.1.2.svg",
   },
   {
@@ -324,7 +328,7 @@ const hypnos = [
     id: "a5",
     class: "apocalypse",
     // img: "blossomApocalypse.jpg",
-    // 576img: "blossomApocalypse-576px.jpg",
+    img576: "blossomApocalypse-576px.jpg",
     img576: "blossomApocalypse-992px.jpg",
     img992: "blossomApocalypse-2160px.jpg",
     flag: "endlessnight2.1.1.svg",

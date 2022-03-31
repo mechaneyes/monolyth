@@ -119,7 +119,9 @@ const Map = () => {
 
             // Animate the map bearing and light color over time, and make the light more
             // intense when the audio is louder.
-            map.current.setBearing(now / 300);
+            
+            // MAP ROTATION
+            // map.current.setBearing(now / 300);
             // map.current.setBearing(100);
 
             // const hue = (now / 100) % 360;
@@ -148,7 +150,7 @@ const Map = () => {
       //   style: "mapbox://styles/mechaneyes/ckx956wynanke14lgplyljg4u", // Monolyth Blue
       center: [lng, lat],
       pitch: 61,
-      bearing: 80,
+      bearing: 110,
       zoom: 16,
     });
 
@@ -169,7 +171,8 @@ const Map = () => {
     map.current.on("load", () => {
       // ————o Animated Camera Rotation o————
       //
-      rotateCamera(110);
+      // rotateCamera(110);
+      // rotateCamera(190);
 
       // ————o 3D Buildings o————
       //

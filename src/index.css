@@ -13,14 +13,3 @@ body {
   margin: 0;
   background-color: #212121;
 }
-
-#root {
-  /* height: 100vh; */
-  overflow: hidden;
-  overflow: scroll;
-}
-
-/* #root > div {
-  position: relative;
-  height: 100vh;
-} */

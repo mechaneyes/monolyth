@@ -65,7 +65,7 @@ const Hypnodelic = (props) => {
           hasVid={props.items[1].vid}
           class={props.items[5].class}
           artist={props.items[1].artist}
-          image={props.items[5].img}
+          image={props.items[3].img}
           flag={props.items[3].flag}
           alt={props.items[1].alt}
           title={props.items[1].title}

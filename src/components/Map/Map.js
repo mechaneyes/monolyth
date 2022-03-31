@@ -137,7 +137,7 @@ const Map = () => {
         .catch((err) => {
           console.log("The following gUM error occurred:", err);
         });
-    }, 500);
+    }, 700);
   });
 
   useEffect(() => {

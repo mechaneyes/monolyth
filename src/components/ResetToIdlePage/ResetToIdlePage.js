@@ -11,13 +11,13 @@ const ResetToIdlePage = () => {
   let timerIncrement = () => {
     idleTime += 1;
     // console.log("idleTime", idleTime);
-    if (idleTime > 1) {
+    if (idleTime > 30) {
       // navigate("/idle");
       clearInterval(idleInterval);
     }
 
-    if (idleTime > 1 && window.location.pathname === "/idle") {
-      window.location.reload(false);
+    if (idleTime > 30 && window.location.pathname === "/idle") {
+      // window.location.reload(false);
       idleTime = 0;
     }
   };
@@ -29,7 +29,7 @@ const ResetToIdlePage = () => {
   //
   useEffect(() => {
     clearInterval(idleInterval);
-    idleInterval = setInterval(timerIncrement, 60000); // 60 Seconds
+    idleInterval = setInterval(timerIncrement, 1000); // 1 Second
 
     return () => {
       clearInterval(idleInterval);

@@ -1,4 +1,4 @@
-import { useState, useRef, useLayoutEffect } from "react";
+import { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { useDispatch } from "react-redux";
 import Slider from "react-slick";
 import Leap from "leapjs";
@@ -35,7 +35,7 @@ const Artworks = (props) => {
     autoplaySpeed: 5000,
     afterChange: () => {
       dispatch(increment());
-      analytics('swiped');
+      analytics("swiped");
     },
   };
 
@@ -49,62 +49,54 @@ const Artworks = (props) => {
 
   useLayoutEffect(() => {
     ReactGA.pageview(window.location.pathname);
-    analytics('landed');
+    analytics("landed");
+  }, []);
 
-    const artworksController = Leap.loop(function (frame) {
-      if (frame.hands.length > 0) {
-        const artworksHand = frame.hands[0];
+  useEffect(() => {
+    setTimeout(() => {
+      const artworksController = Leap.loop(function (frame) {
+        if (frame.hands.length > 0) {
+          const artworksHand = frame.hands[0];
 
-        // Hand.translation() ... moving left/right on the x axis (artworksMovement[0])
-        // https://developer-archive.leapmotion.com/documentation/javascript/api/Leap.Hand.html
-        //
-        // Limiting hotspot using tip and normalizedPositions
-        // https://developer-archive.leapmotion.com/documentation/javascript/api/Leap.Pointable.html#Pointable.tipPosition
-        //
-        let interactionBox = frame.interactionBox;
-        var tipPosition;
-        var normalizedPosition;
-        if (frame.pointables.length > 0) {
-          //Leap coordinates
-          tipPosition = frame.pointables[0].tipPosition;
-          //Normalized coordinates
-          normalizedPosition = interactionBox.normalizePoint(tipPosition);
+          // Hand.translation() ... moving left/right on the x axis (artworksMovement[0])
+          // https://developer-archive.leapmotion.com/documentation/javascript/api/Leap.Hand.html
+          //
+          // Limiting hotspot using tip and normalizedPositions
+          // https://developer-archive.leapmotion.com/documentation/javascript/api/Leap.Pointable.html#Pointable.tipPosition
+          //
+          let interactionBox = frame.interactionBox;
+          var tipPosition;
+          var normalizedPosition;
+          if (frame.pointables.length > 0) {
+            //Leap coordinates
+            tipPosition = frame.pointables[0].tipPosition;
+            //Normalized coordinates
+            normalizedPosition = interactionBox.normalizePoint(tipPosition);
+          }
+
+          const artworksPreviousFrame = artworksController.frame(1);
+          const artworksMovement = artworksHand.translation(
+            artworksPreviousFrame
+          );
+
+          if (artworksMovement[0] < 0) {
+            console.log("normalized rtl", normalizedPosition[0]); // LeftRight
+            // console.log("tipPosition", tipPosition[2]); // UpDown
+            sliderArtworks.current.slickNext();
+          }
+          if (artworksMovement[0] > 0) {
+            console.log("normalized ltr", normalizedPosition[0]);
+            // console.log("tipPosition", tipPosition[2]);
+            sliderArtworks.current.slickPrev();
+          }
         }
-
-        const artworksPreviousFrame = artworksController.frame(1);
-        const artworksMovement = artworksHand.translation(
-          artworksPreviousFrame
-        );
-
-        if (
-          artworksMovement[0] < 0
-          // normalizedPosition[0] > -0.5 &&
-          // normalizedPosition[0] < 0.5 &&
-          // tipPosition[2] > -75 &&
-          // tipPosition[2] < 120
-        ) {
-          console.log("normalized rtl", normalizedPosition[0]); // LeftRight
-          // console.log("tipPosition", tipPosition[2]); // UpDown
-          sliderArtworks.current.slickNext();
-        }
-        if (
-          artworksMovement[0] > 0 
-          // normalizedPosition[0] > -0.5 &&
-          // normalizedPosition[0] < 0.5 &&
-          // tipPosition[2] > -75 &&
-          // tipPosition[2] < 120
-        ) {
-          console.log("normalized ltr", normalizedPosition[0]);
-          // console.log("tipPosition", tipPosition[2]);
-          sliderArtworks.current.slickPrev();
-        }
-      }
-    });
+      });
+    }, 500);
   }, []);
 
   const analytics = (gaAction) => {
     ReactGA.event({
-      category: "Gallery Page",
+      category: "gallery page",
       action: gaAction,
       label: "floppys",
     });
@@ -424,7 +416,7 @@ const Artworks = (props) => {
           <ArtworkThumbnail image={props.items[7].img576} />
           {/* <ArtworkThumbnail image={props.items[14].img576} /> */}
           <img
-            src='/images/artworks/576px/RayWeitzenberg-Halalrunner-576px.jpg'
+            src="/images/artworks/576px/RayWeitzenberg-Halalrunner-576px.jpg"
             alt="thumbnail of halalrunner"
           />
         </Slider>

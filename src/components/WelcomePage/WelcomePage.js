@@ -26,7 +26,7 @@ const WelcomePage = () => {
 
   const analytics = (gaAction) => {
     ReactGA.event({
-      category: "Welcome Page",
+      category: "welcome page",
       action: gaAction,
       label: "floppys",
     });
@@ -38,12 +38,20 @@ const WelcomePage = () => {
 
     setTimeout(() => {
       welcomeControl();
-    }, 2000);
+    }, 1000);
 
     return () => {
       // isRunning = false;
     };
-  });
+  }, []);
+
+  const advance = () =>  {
+    dispatch(increment());
+
+    setTimeout(() => {
+      navigate("/mechaneyes");
+    }, 200)
+  }
 
   const welcomeControl = () => {
     controller = Leap.loop(function (frame) {
@@ -58,12 +66,14 @@ const WelcomePage = () => {
           const movement = hand.translation(previousFrame);
 
           if (movement[0] < 0) {
-            sliderWelcome.current.slickNext();
-            // console.log("direction", movement[0]);
+            // sliderWelcome.current.slickNext();
+            advance()
+            console.log("direction", movement[0]);
           }
           if (movement[0] > 0) {
-            sliderWelcome.current.slickPrev();
-            // console.log("direction", movement[0]);
+            // sliderWelcome.current.slickPrev();
+            advance()
+            console.log("direction", movement[0]);
           }
         }
       }
@@ -79,7 +89,7 @@ const WelcomePage = () => {
     slidesToScroll: 1,
     autoplaySpeed: 5000,
     afterChange: () => {
-      analytics("swiped");
+      analytics("welcome swiped");
       dispatch(increment());
       setTimeout(() => {
         navigate("/mechaneyes");

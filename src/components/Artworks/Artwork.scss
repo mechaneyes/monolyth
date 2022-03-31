@@ -54,7 +54,7 @@
     max-height: 63vh;
     margin-bottom: 10px;
     object-fit: contain;
-    object-position: left;
+    object-position: center;
 
     @include bp(sm) {
       max-height: 75vh;
@@ -78,7 +78,7 @@
       max-height: 70vh;
       // max-height: 80vh;
       margin: 0 0 50px;
-      object-position: left;
+      object-position: center;
     }
   }
 

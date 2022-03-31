@@ -53,6 +53,7 @@ const Artworks = (props) => {
   }, []);
 
   useEffect(() => {
+    var waiting = false; // Initially, we're not waiting
     setTimeout(() => {
       const artworksController = Leap.loop(function (frame) {
         if (frame.hands.length > 0) {
@@ -67,6 +68,8 @@ const Artworks = (props) => {
           let interactionBox = frame.interactionBox;
           var tipPosition;
           var normalizedPosition;
+          let direction = artworksHand.direction;
+
           if (frame.pointables.length > 0) {
             //Leap coordinates
             tipPosition = frame.pointables[0].tipPosition;
@@ -79,15 +82,39 @@ const Artworks = (props) => {
             artworksPreviousFrame
           );
 
-          if (artworksMovement[0] < 0) {
-            console.log("normalized rtl", normalizedPosition[0]); // LeftRight
-            // console.log("tipPosition", tipPosition[2]); // UpDown
-            sliderArtworks.current.slickNext();
+          // Throttle paging through the carousel
+          // After changing slide, wait 1s before you can change again
+          // https://stackoverflow.com/a/27078401/4811066
+          // 
+          const throttler = (rtl_ltr) => {
+            if (!waiting) {
+              if (rtl_ltr) {
+                sliderArtworks.current.slickNext();
+              } else {
+                sliderArtworks.current.slickPrev();
+              }
+              console.log("not waiting", waiting); // Execute function
+              waiting = true; // Prevent future invocations
+
+              setTimeout(function () {
+                console.log("now we're waiting", waiting);
+                waiting = false; // And allow future invocations
+              }, 1000);
+            }
           }
-          if (artworksMovement[0] > 0) {
-            console.log("normalized ltr", normalizedPosition[0]);
-            // console.log("tipPosition", tipPosition[2]);
-            sliderArtworks.current.slickPrev();
+
+          // Left to Right
+          //
+          if (direction[0] > 0) {
+            // console.log("direction left right", direction[0]);
+            // sliderArtworks.current.slickNext();
+            throttler(true)
+          }
+
+          // Right to Left
+          // 
+          if (direction[0] < 0) {
+            throttler(false)
           }
         }
       });

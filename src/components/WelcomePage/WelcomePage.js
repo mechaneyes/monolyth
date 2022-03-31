@@ -32,58 +32,49 @@ const WelcomePage = () => {
     });
   };
 
+  const killer = () => {
+    console.log('disconnect')
+    controller.disconnect();
+  }
+
+  const welcomeControl = () => {
+  };
+
   useEffect(() => {
     ReactGA.pageview(window.location.pathname);
     analytics("landed")
 
     setTimeout(() => {
-      welcomeControl();
+      // welcomeControl();
+      controller = Leap.loop(function (frame) {
+        if (isRunning) {
+          if (frame.hands.length > 0) {
+            const hand = frame.hands[0];
+  
+            // Hand.translation() ...
+            // moving left/right on the x axis (movement[0])
+            //
+            const previousFrame = controller.frame(1);
+            const movement = hand.translation(previousFrame);
+  
+            if (movement[0]) {
+              dispatch(increment());
+              console.log('advance')
+          
+              setTimeout(() => {
+                killer()
+                navigate("/mechaneyes");
+              }, 200)
+            }
+          }
+        }
+      });
     }, 1000);
 
     return () => {
       // isRunning = false;
     };
   }, []);
-
-  const advance = () =>  {
-    dispatch(increment());
-
-    setTimeout(() => {
-      navigate("/mechaneyes");
-    }, 200)
-  }
-
-  const welcomeControl = () => {
-    controller = Leap.loop(function (frame) {
-      if (isRunning) {
-        if (frame.hands.length > 0) {
-          const hand = frame.hands[0];
-
-          // Hand.translation() ...
-          // moving left/right on the x axis (movement[0])
-          //
-          const previousFrame = controller.frame(1);
-          const movement = hand.translation(previousFrame);
-
-          // https://stackoverflow.com/questions/61961531/change-slick-slider-slides-from-another-component
-          if (movement[0] < 0) {
-            sliderWelcome.current.slickNext();
-            controller.disconnect()
-            advance()
-            // sliderWelcome.current.unslick
-            console.log("direction", movement[0]);
-          }
-          if (movement[0] > 0) {
-            sliderWelcome.current.slickPrev();
-            controller.disconnect()
-            advance()
-            // sliderWelcome.current.unslick
-            console.log("direction", movement[0]);
-          }
-        }
-      }
-    });
-  };
 
   const welcomeSliderSettings = {
     arrows: false,
@@ -98,7 +89,7 @@ const WelcomePage = () => {
       dispatch(increment());
       setTimeout(() => {
         navigate("/mechaneyes");
-      }, 200)
+      }, 1200)
     },
   };
 
@@ -163,6 +154,7 @@ const WelcomePage = () => {
       <Header />
       <ResetToIdlePage />
       <Slider {...welcomeSliderSettings} ref={sliderWelcome}>
+      {/* <Slider {...welcomeSliderSettings}> */}
         <main className="welcome-page">
           <div className="welcome-page__content">
             <img

@@ -11,13 +11,13 @@ const ResetToIdlePage = () => {
   let timerIncrement = () => {
     idleTime += 1;
     // console.log("idleTime", idleTime);
-    if (idleTime > 30) {
-      // navigate("/idle");
+    if (idleTime > 90) {
+      navigate("/idle");
       clearInterval(idleInterval);
     }
 
     if (idleTime > 30 && window.location.pathname === "/idle") {
-      // window.location.reload(false);
+      window.location.reload(false);
       idleTime = 0;
     }
   };

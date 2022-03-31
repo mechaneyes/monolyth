@@ -65,14 +65,19 @@ const WelcomePage = () => {
           const previousFrame = controller.frame(1);
           const movement = hand.translation(previousFrame);
 
+          // https://stackoverflow.com/questions/61961531/change-slick-slider-slides-from-another-component
           if (movement[0] < 0) {
-            // sliderWelcome.current.slickNext();
+            sliderWelcome.current.slickNext();
+            controller.disconnect()
             advance()
+            // sliderWelcome.current.unslick
             console.log("direction", movement[0]);
           }
           if (movement[0] > 0) {
-            // sliderWelcome.current.slickPrev();
+            sliderWelcome.current.slickPrev();
+            controller.disconnect()
             advance()
+            // sliderWelcome.current.unslick
             console.log("direction", movement[0]);
           }
         }

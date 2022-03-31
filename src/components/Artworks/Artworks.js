@@ -47,78 +47,89 @@ const Artworks = (props) => {
     centerMode: true,
   };
 
+  // Throttle paging through the carousel
+  // After changing slide, wait 1s before you can change again
+  // https://stackoverflow.com/a/27078401/4811066
+  //
+  var waiting = false; // Initially, we're not waiting
+  const throttler = (rtl_ltr) => {
+    if (!waiting) {
+      console.log("notnot waiting", waiting); // Execute function
+      if (rtl_ltr) {
+        sliderArtworks.current.slickPrev();
+        console.log("PREVPREVPREVPREV");
+        waiting = true;
+      } else {
+        sliderArtworks.current.slickNext();
+        console.log("next");
+        waiting = true;
+      }
+      // waiting = true; // Prevent future invocations
+
+      setTimeout(function () {
+        console.log("waiting", waiting);
+        waiting = false; // And allow future invocations
+      }, 1500);
+    }
+  };
+
   useLayoutEffect(() => {
     ReactGA.pageview(window.location.pathname);
     analytics("landed");
   }, []);
 
   useEffect(() => {
-    var waiting = false; // Initially, we're not waiting
     setTimeout(() => {
       const artworksController = Leap.loop(function (frame) {
         if (frame.hands.length > 0) {
-          const artworksHand = frame.hands[0];
+          let direction = frame.hands[0].direction;
 
-          // Hand.translation() ... moving left/right on the x axis (artworksMovement[0])
-          // https://developer-archive.leapmotion.com/documentation/javascript/api/Leap.Hand.html
+          // Placement Up/Down in relation to the display
+          // This is actually the Z-Axis as Leap Motion defines it
           //
-          // Limiting hotspot using tip and normalizedPositions
-          // https://developer-archive.leapmotion.com/documentation/javascript/api/Leap.Pointable.html#Pointable.tipPosition
-          //
-          let interactionBox = frame.interactionBox;
-          var tipPosition;
-          var normalizedPosition;
-          let direction = artworksHand.direction;
+          let hand = frame.hands[0];
+          let position = hand.palmPosition[2];
+          if (position < 150 && position > -120) {
 
-          if (frame.pointables.length > 0) {
-            //Leap coordinates
-            tipPosition = frame.pointables[0].tipPosition;
-            //Normalized coordinates
-            normalizedPosition = interactionBox.normalizePoint(tipPosition);
-          }
+            // Left to Right
+            //
+            if (direction[0] > 0) {
+              // throttler(false);
+              console.log("RIGHTRIGHT RIGHTRIGHT", direction[0]);
 
-          const artworksPreviousFrame = artworksController.frame(1);
-          const artworksMovement = artworksHand.translation(
-            artworksPreviousFrame
-          );
+              // if (!waiting) {
+              //   console.log("notnot waiting", waiting); // Execute function
+              //   sliderArtworks.current.slickPrev();
+              //   waiting = true; // Prevent future invocations
 
-          // Throttle paging through the carousel
-          // After changing slide, wait 1s before you can change again
-          // https://stackoverflow.com/a/27078401/4811066
-          // 
-          const throttler = (rtl_ltr) => {
-            if (!waiting) {
-              if (rtl_ltr) {
-                sliderArtworks.current.slickNext();
-              } else {
-                sliderArtworks.current.slickPrev();
-              }
-              console.log("not waiting", waiting); // Execute function
-              waiting = true; // Prevent future invocations
-
-              setTimeout(function () {
-                console.log("now we're waiting", waiting);
-                waiting = false; // And allow future invocations
-              }, 1000);
+              //   setTimeout(function () {
+              //     console.log("waiting", waiting);
+              //     waiting = false; // And allow future invocations
+              //   }, 1500);
+              // }
             }
-          }
 
-          // Left to Right
-          //
-          if (direction[0] > 0) {
-            // console.log("direction left right", direction[0]);
-            // sliderArtworks.current.slickNext();
-            throttler(true)
-          }
+            // Right to Left
+            //
+            if (direction[0] < 0) {
+              // throttler(true);
+              console.log("left", direction[0]);
 
-          // Right to Left
-          // 
-          if (direction[0] < 0) {
-            throttler(false)
+              // if (!waiting) {
+              //   sliderArtworks.current.slickNext();
+              //   console.log("left");
+              //   waiting = true; // Prevent future invocations
+
+              //   setTimeout(function () {
+              //     console.log("waiting", waiting);
+              //     waiting = false; // And allow future invocations
+              //   }, 1500);
+              // }
+            }
           }
         }
       });
-    }, 500);
+    }, 1500);
   }, []);
 
   const analytics = (gaAction) => {

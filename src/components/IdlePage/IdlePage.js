@@ -73,7 +73,7 @@ const Idle = () => {
         if (position[0] >= -50 && position[0] <= 50 && position[1] < 250) {
           if (progressCount <= 2) {
             progressCount += 0.02;
-            console.log("floorCount", progressCount);
+            // console.log("floorCount", progressCount);
           } else {
             progressCount = 2;
             navigate("/welcome");

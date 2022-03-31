@@ -47,30 +47,26 @@ const Artwork = (props) => {
 
   return (
     <Card className="artwork-item">
-      <div className="artwork-item__headstone">
-        <div className="artwork-item__deets">
-          <h1 className="artwork-item__artist-name">{props.artist}</h1>
-          <ArtworkTitle title={props.title} year={props.year} />
-        </div>
-        {/* <img
-          className="artwork-item__qr"
-          src={`/images/${props.qr}`}
-          alt="QR code to get additional info"
-        /> */}
-        {/* <button className="artwork-item__cta">info</button> */}
-      </div>
       {vidOrImg()}
       <div className="artwork-item__footstone">
-        <Fragment>
-          <p className="artwork-item__artwork-info">{props.info}</p>
-        </Fragment>
         <div className="artwork-item__link">
           <img
             className="artwork-item__qr"
             src={`/images/qr-codes/qr-monolyth.global-utmArtwork.png`}
             alt="QR code to get additional info"
           />
-          <h3>https://monolyth.global</h3>
+          <h3>monolyth.global</h3>
+          {/* <button className="artwork-item__cta">info</button> */}
+        </div>
+        <div className="artwork-item__headstone">
+          <div className="artwork-item__deets">
+            <h1 className="artwork-item__artist-name">{props.artist}</h1>
+            <ArtworkTitle title={props.title} year={props.year} />
+          </div>
+
+          <Fragment>
+            <p className="artwork-item__artwork-info">{props.info}</p>
+          </Fragment>
         </div>
       </div>
     </Card>

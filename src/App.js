@@ -5,6 +5,7 @@ import Idle from "./routes/idle";
 import Welcome from "./routes/welcome";
 import Mechaneyes from "./routes/mechaneyes";
 import Map from "./routes/mapOne";
+import MapSolo from "./routes/mapSolo";
 import Hypnodelic from "./routes/hypnodelic";
 import HypnoX from "./routes/hypno-x";
 // import Honeycomb from "./routes/honeycomb";
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="welcome" element={<Welcome />} />
           <Route path="mechaneyes" element={<Mechaneyes />} />
           <Route path="map" element={<Map />} />
+          <Route path="map-solo" element={<MapSolo />} />
           <Route path="hypnodelic" element={<Hypnodelic />} />
           <Route path="hypno-x" element={<HypnoX />} />
         </Routes>

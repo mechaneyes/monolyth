@@ -171,7 +171,7 @@ const Map = () => {
     map.current.on("load", () => {
       // ————o Animated Camera Rotation o————
       //
-      // rotateCamera(110);
+      rotateCamera(70);
       // rotateCamera(190);
 
       // ————o 3D Buildings o————
@@ -216,7 +216,7 @@ const Map = () => {
     // Divide timestamp by 100 to slow rotation to ~10 degrees / sec
     map.current.rotateTo((timestamp / 100) % 360, { duration: 0 });
     // Request the next frame of the animation.
-    // requestAnimationFrame(rotateCamera);
+    requestAnimationFrame(rotateCamera);
   };
 
   return (

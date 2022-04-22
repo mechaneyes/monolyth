@@ -142,7 +142,7 @@ const Artworks = (props) => {
 
   return (
     <>
-      <ResetToIdlePage />
+      {/* <ResetToIdlePage /> */}
       <Slider {...sliderSettings} asNavFor={nav2} ref={sliderArtworks}>
         {/* alt: "Shaun Burner - Phoenix", */}
         <Artwork
